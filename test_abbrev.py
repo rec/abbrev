@@ -34,7 +34,8 @@ class TestAbbrev(TestCase):
         d = {'one': 1, 'two': 2, 'three': 3}
         abr = abbrev(d, multi=True)
 
-        assert abr('on') == abr('one') == (1,)
+        assert abr('one') == (1,)
+        assert abr('on') == (1,)
         assert abr('tw') == (2,)
         assert abr('three') == (3,)
         assert abr('t') == (2, 3)
