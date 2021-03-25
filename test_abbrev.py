@@ -5,19 +5,37 @@ import abbrev
 class TestAbbrev(TestCase):
     def test_function(self):
         d = {'one': 1, 'two': 2, 'three': 3}
-        ab = abbrev(d)
+        abr = abbrev(d)
 
-        assert abbrev(d, 'o') == ab('on') == ab('one') == 1
-        assert abbrev(d, 'two') == ab('tw') == 2
-        assert abbrev(d, 'th') == ab('three') == 3
+        assert abbrev(d, 'o') == abr('on') == abr('one') == 1
+        assert abbrev(d, 'two') == abr('tw') == 2
+        assert abbrev(d, 'th') == abr('three') == 3
 
     def test_error(self):
-        ab = abbrev({'one': 1, 'two': 2, 'three': 3})
+        abr = abbrev({'one': 1, 'two': 2, 'three': 3})
 
         with self.assertRaises(KeyError) as m:
-            ab('four')
+            abr('four')
         assert m.exception.args == ('four',)
 
         with self.assertRaises(KeyError) as m:
-            ab('t')
-        assert m.exception.args == ('t', "was ambiguous: ['two', 'three']")
+            abr('t')
+        assert m.exception.args == ('t', "was ambiguous: ('two', 'three')")
+
+    def test_unique(self):
+        abr = abbrev({'one': 1, 'two': 2, 'three': 3}, unique=False)
+
+        assert abr('t') == 2
+        assert abr('o') == 1
+        with self.assertRaises(KeyError):
+            abr('t', unique=True)
+
+    def test_multi(self):
+        d = {'one': 1, 'two': 2, 'three': 3}
+        abr = abbrev(d, multi=True)
+
+        assert abr('on') == abr('one') == (1,)
+        assert abr('tw') == (2,)
+        assert abr('three') == (3,)
+        assert abr('t') == (2, 3)
+        assert abr('') == (1, 2, 3)
