@@ -3,7 +3,7 @@
 [run]
 
 branch = True
-source = safer
+source = abbrev
 
 [report]
 
