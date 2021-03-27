@@ -44,7 +44,7 @@ _NONE = object()
 
 
 @xmod
-def abbrev(abbrevs, key=_NONE, multi=False, unique=True):
+def abbrev(abbrevs, key=_NONE, default=_NONE, multi=False, unique=True):
     """
     Look up abbreviations in a dictionary.  Handy when the user
     has a choice of commands with long names.
@@ -59,6 +59,10 @@ def abbrev(abbrevs, key=_NONE, multi=False, unique=True):
         If `key` is omitted, `abbrev` returns a callable that looks up
         abbreviations in `abbrevs`
 
+      default:
+        if `key` is not found in the dictionary, `default` is returned, if it's
+        set.  Otherwise, missing keys throw a KeyError
+
       multi:
         If True, a tuple of matching keys is returned on a match
         If False, the default, only a single matching value is returned
@@ -70,7 +74,9 @@ def abbrev(abbrevs, key=_NONE, multi=False, unique=True):
         `unique` is ignored if `multi` is set
     """
     if key is _NONE:
-        return functools.partial(abbrev, abbrevs, multi=multi, unique=unique)
+        return functools.partial(
+            abbrev, abbrevs, default=default, multi=multi, unique=unique
+        )
 
     r = abbrevs.get(key, _NONE)
     if r is not _NONE:
@@ -81,6 +87,8 @@ def abbrev(abbrevs, key=_NONE, multi=False, unique=True):
         keys, values = zip(*kv)
     elif multi:
         return []
+    elif default is not _NONE:
+        return default
     else:
         raise KeyError(key)
 

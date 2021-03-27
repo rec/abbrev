@@ -40,3 +40,12 @@ class TestAbbrev(TestCase):
         assert abr('three') == (3,)
         assert abr('t') == (2, 3)
         assert abr('') == (1, 2, 3)
+
+    def test_default(self):
+        d = {'one': 1, 'two': 2, 'three': 3}
+        abr = abbrev(d, default=0)
+        assert abr('on') == abr('one') == 1
+        assert abr('two') == abr('tw') == 2
+        assert abr('th') == abr('three') == 3
+        assert abr('missing') == 0
+        assert abr('missing', multi=True) == []
