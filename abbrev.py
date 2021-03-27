@@ -39,12 +39,13 @@ import functools
 import xmod
 
 __version__ = '0.9.1'
-__all__ = ('abbrev',)
-_NONE = object()
+__all__ = 'abbrev', 'NONE'
+
+NONE = object()
 
 
 @xmod
-def abbrev(abbrevs, key=_NONE, default=_NONE, multi=False, unique=True):
+def abbrev(abbrevs, key=NONE, default=NONE, multi=False, unique=True):
     """
     Look up abbreviations in a dictionary.  Handy when the user
     has a choice of commands with long names.
@@ -73,13 +74,13 @@ def abbrev(abbrevs, key=_NONE, default=_NONE, multi=False, unique=True):
 
         `unique` is ignored if `multi` is set
     """
-    if key is _NONE:
+    if key is NONE:
         return functools.partial(
             abbrev, abbrevs, default=default, multi=multi, unique=unique
         )
 
-    r = abbrevs.get(key, _NONE)
-    if r is not _NONE:
+    r = abbrevs.get(key, NONE)
+    if r is not NONE:
         return (r,) if multi else r
 
     kv = [(k, v) for k, v in abbrevs.items() if k.startswith(key)]
@@ -87,7 +88,7 @@ def abbrev(abbrevs, key=_NONE, default=_NONE, multi=False, unique=True):
         keys, values = zip(*kv)
     elif multi:
         return []
-    elif default is not _NONE:
+    elif default is not NONE:
         return default
     else:
         raise KeyError(key)
@@ -99,3 +100,6 @@ def abbrev(abbrevs, key=_NONE, default=_NONE, multi=False, unique=True):
         raise KeyError(key, f'was ambiguous: {keys}')
 
     return values[0]
+
+
+_DOKS = {NONE: 'NONE'}
