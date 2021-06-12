@@ -105,4 +105,4 @@ def abbrev(abbrevs, key=NONE, default=NONE, multi=False, unique=True):
     return values[0]
 
 
-_DOKS = {NONE: 'NONE'}
+_DOKS = {NONE: 'abbrev.NONE'}
