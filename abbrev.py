@@ -52,7 +52,7 @@ def abbrev(abbrevs, key=NONE, default=NONE, multi=False, unique=True):
 
     ARGUMENTS
       abbrevs:
-        A dictionary with string keys
+        A dictionary with string keys or a sequence of strings
 
       key:
         An abbreviated key to look up in `abbrevs`,
@@ -78,6 +78,9 @@ def abbrev(abbrevs, key=NONE, default=NONE, multi=False, unique=True):
         return functools.partial(
             abbrev, abbrevs, default=default, multi=multi, unique=unique
         )
+
+    if not isinstance(abbrevs, dict):
+        abbrevs = {i: i for i in abbrevs}
 
     r = abbrevs.get(key, NONE)
     if r is not NONE:

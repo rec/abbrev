@@ -11,6 +11,14 @@ class TestAbbrev(TestCase):
         assert abbrev(d, 'two') == abr('tw') == 2
         assert abbrev(d, 'th') == abr('three') == 3
 
+    def test_sequence(self):
+        d = 'one', 'two', 'three'
+        abr = abbrev(d)
+
+        assert abbrev(d, 'o') == abr('on') == abr('one') == 'one'
+        assert abbrev(d, 'two') == abr('tw') == 'two'
+        assert abbrev(d, 'th') == abr('three') == 'three'
+
     def test_error(self):
         abr = abbrev({'one': 1, 'two': 2, 'three': 3})
 
