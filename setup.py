@@ -22,7 +22,7 @@ if __name__ == '__main__':
         url='https://github.com/rec/abbrev',
         tests_require=['pytest'],
         py_modules=['abbrev'],
-        description='A dictionary that allows abbreviations',
+        description='🐜 A dictionary that allows abbreviations 🐜',
         long_description=open('README.rst').read(),
         license='MIT',
         classifiers=_classifiers,
