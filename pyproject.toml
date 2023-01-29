@@ -6,3 +6,18 @@ target-version = ['py37']
 [tool.doks]
 source = 'abbrev.py'
 target = 'README.rst'
+
+[tool.poetry]
+name = "abbrev"
+version = "1.0.1"
+description = "🐜 A dictionary that allows abbreviations 🐜"
+authors = ["Tom Ritchford <tom@swirly.com>"]
+license = "MIT"
+readme = "README.rst"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
