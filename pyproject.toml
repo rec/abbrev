@@ -24,6 +24,9 @@ coverage = "^7.1.0"
 flake8 = "*"
 pytest = "^7.2.1"
 readme-renderer = "^37.3"
+mkdocs = "^1.4.2"
+mkdocstrings = {extras = ["python"], version = "^0.20.0"}
+mkdocs-material = "^9.0.8"
 
 [build-system]
 requires = ["poetry-core"]
