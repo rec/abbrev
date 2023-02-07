@@ -1,4 +1,58 @@
-from typing import Any, Dict
+"""
+Very handy when the user has a choice of commands with long names.
+
+## Examples
+
+    import abbrev
+
+    #
+    # 1. Using a list of choices
+
+    a = ['one', 'two', 'three']
+
+    assert abbrev(a, 'one') == 'one'
+    assert abbrev(a, 'o') == 'one'
+    assert abbrev(a, 'tw') == 'one'
+
+    abbrev(a, 'four')  # Raises a KeyError: no such key
+    abbrev(a, 't')  # Raises a KeyError: ambiguous key ('two' or 'three'?)
+
+    #
+    # 2. Using a dictionary of choices
+
+    d = {'one': 1, 'two': 2, 'three': 3}
+    assert abbrev(d, 'one') == 1
+    assert abbrev(d, 'o') == 1
+    assert abbrev(d, 'tw') == 2
+
+    #
+    # 3. How to make an abbreviator.
+
+    my_abbrevs = abbrev(d)
+
+    assert my_abbrevs('one') == 1
+    assert my_abbrevs('tw') == 2
+
+    #
+    # 4. Multi mode returns all the results that match
+
+    multi = abbrev(d, multi=True)
+
+    assert multi('t') == abbrev(d, 't', multi=True) == ('two', 'three')
+    assert multi('o') == abbrev(d, 'o', multi=True) == ('one', )
+
+    multi('four')  # Still raises a key error
+
+    #
+    # 5. Turn off unique to get the first result only.
+
+    assert abbrev(d, 't', unique=False) == ('two',)
+
+Sponsorship information here
+
+"""
+
+from typing import Any, Dict, Sequence, Union
 import functools
 import xmod
 
@@ -10,48 +64,14 @@ NONE = object()
 
 @xmod
 def abbrev(
-    abbrevs: Dict[str, Any],
+    abbrevs: Union[Dict[str, Any], Sequence[str]],
     key: Any = NONE,
     default: Any = NONE,
     multi: bool = False,
     unique: bool = True,
 ) -> Any:
     """
-    Expand abbreviations in a dictionary.
-
-    Handy when the user has a choice of commands with long names.
-
-    Examples:
-
-    ```
-    import abbrev
-    d = {'one': 1, 'two': 2, 'three': 3}
-
-    assert abbrev(d, 'one') == 1
-    assert abbrev(d, 'o') == 1
-    assert abbrev(d, 'tw') == 2
-
-    abbrev(d, 'four')  # Raises a KeyError: no such key
-    abbrev(d, 't')  # Raises a KeyError: ambiguous key ('two' or 'three'?)
-
-    # You can "curry" with a specific dictionary to get a callable
-    # abbreviation example - like this:
-    my_abbrevs = abbrev(d)
-
-    assert my_abbrevs('one') == 1
-    assert my_abbrevs('tw') == 2
-
-    # In multi mode, you get all the results that match:
-    multi = abbrev(d, multi=True)
-
-    assert multi('t') == abbrev(d, 't', multi=True) == ('two', 'three')
-    assert multi('o') == abbrev(d, 'o', multi=True) == ('one', )
-
-    multi('four')  # Still raises a key error
-
-    # Or if you turn off unique, you get the first result only:
-    assert abbrev(d, 't', unique=False) == ('two',)
-    ```
+    Expand an abbreviation or return an abbreviator
 
     Args:
 
