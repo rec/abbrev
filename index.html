@@ -191,6 +191,19 @@
     abbrev
   </a>
   
+    <nav class="md-nav" aria-label="abbrev">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abbrev--examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -239,6 +252,19 @@
     abbrev
   </a>
   
+    <nav class="md-nav" aria-label="abbrev">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abbrev--examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -272,6 +298,55 @@
 
 <a id="abbrev"></a>
   <div class="doc doc-contents first">
+  
+      
+<p>Very handy when the user has a choice of commands with long names.</p>
+<h3 id="abbrev--examples">Examples</h3>
+<pre><code>import abbrev
+
+#
+# 1. Using a list of choices
+
+a = ['one', 'two', 'three']
+
+assert abbrev(a, 'one') == 'one'
+assert abbrev(a, 'o') == 'one'
+assert abbrev(a, 'tw') == 'one'
+
+abbrev(a, 'four')  # Raises a KeyError: no such key
+abbrev(a, 't')  # Raises a KeyError: ambiguous key ('two' or 'three'?)
+
+#
+# 2. Using a dictionary of choices
+
+d = {'one': 1, 'two': 2, 'three': 3}
+assert abbrev(d, 'one') == 1
+assert abbrev(d, 'o') == 1
+assert abbrev(d, 'tw') == 2
+
+#
+# 3. How to make an abbreviator.
+
+my_abbrevs = abbrev(d)
+
+assert my_abbrevs('one') == 1
+assert my_abbrevs('tw') == 2
+
+#
+# 4. Multi mode returns all the results that match
+
+multi = abbrev(d, multi=True)
+
+assert multi('t') == abbrev(d, 't', multi=True) == ('two', 'three')
+assert multi('o') == abbrev(d, 'o', multi=True) == ('one', )
+
+multi('four')  # Still raises a key error
+
+#
+# 5. Turn off unique to get the first result only.
+
+assert abbrev(d, 't', unique=False) == ('two',)
+</code></pre>
 
   
 
@@ -289,7 +364,7 @@
 
 
 
-<h2 id="abbrev.abbrev" class="doc doc-heading">
+<br/> <h1 class="doc doc-heading"> API documentation </h1> <h2 id="abbrev.abbrev" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">abbrev</span><span class="p">(</span><span class="n">abbrevs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">NONE</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NONE</span><span class="p">,</span> <span class="n">multi</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
 
 </h2>
@@ -297,39 +372,7 @@
 
   <div class="doc doc-contents ">
   
-      <p>Expand abbreviations in a dictionary.</p>
-<p>Handy when the user has a choice of commands with long names.</p>
-
-<p><strong>Examples:</strong></p>
-    
-      <pre><code>import abbrev
-d = {'one': 1, 'two': 2, 'three': 3}
-
-assert abbrev(d, 'one') == 1
-assert abbrev(d, 'o') == 1
-assert abbrev(d, 'tw') == 2
-
-abbrev(d, 'four')  # Raises a KeyError: no such key
-abbrev(d, 't')  # Raises a KeyError: ambiguous key ('two' or 'three'?)
-
-# You can &quot;curry&quot; with a specific dictionary to get a callable
-# abbreviation example - like this:
-my_abbrevs = abbrev(d)
-
-assert my_abbrevs('one') == 1
-assert my_abbrevs('tw') == 2
-
-# In multi mode, you get all the results that match:
-multi = abbrev(d, multi=True)
-
-assert multi('t') == abbrev(d, 't', multi=True) == ('two', 'three')
-assert multi('o') == abbrev(d, 'o', multi=True) == ('one', )
-
-multi('four')  # Still raises a key error
-
-# Or if you turn off unique, you get the first result only:
-assert abbrev(d, 't', unique=False) == ('two',)
-</code></pre>
+      <p>Expand an abbreviation or return an abbreviator</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -345,7 +388,7 @@ assert abbrev(d, 't', unique=False) == ('two',)
         <tr>
           <td><code>abbrevs</code></td>
           <td>
-                <code><span title="typing.Dict">Dict</span>[str, <span title="typing.Any">Any</span>]</code>
+                <code><span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>[str, <span title="typing.Any">Any</span>], <span title="typing.Sequence">Sequence</span>[str]]</code>
           </td>
           <td><p>A dictionary with string keys or a sequence of strings</p></td>
           <td>
@@ -403,60 +446,7 @@ key matches.  If False, <code>abbrev</code> returns the first match.
 
       <details class="quote">
         <summary>Source code in <code>abbrev/abbrev.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 11</span>
-<span class="normal"> 12</span>
-<span class="normal"> 13</span>
-<span class="normal"> 14</span>
-<span class="normal"> 15</span>
-<span class="normal"> 16</span>
-<span class="normal"> 17</span>
-<span class="normal"> 18</span>
-<span class="normal"> 19</span>
-<span class="normal"> 20</span>
-<span class="normal"> 21</span>
-<span class="normal"> 22</span>
-<span class="normal"> 23</span>
-<span class="normal"> 24</span>
-<span class="normal"> 25</span>
-<span class="normal"> 26</span>
-<span class="normal"> 27</span>
-<span class="normal"> 28</span>
-<span class="normal"> 29</span>
-<span class="normal"> 30</span>
-<span class="normal"> 31</span>
-<span class="normal"> 32</span>
-<span class="normal"> 33</span>
-<span class="normal"> 34</span>
-<span class="normal"> 35</span>
-<span class="normal"> 36</span>
-<span class="normal"> 37</span>
-<span class="normal"> 38</span>
-<span class="normal"> 39</span>
-<span class="normal"> 40</span>
-<span class="normal"> 41</span>
-<span class="normal"> 42</span>
-<span class="normal"> 43</span>
-<span class="normal"> 44</span>
-<span class="normal"> 45</span>
-<span class="normal"> 46</span>
-<span class="normal"> 47</span>
-<span class="normal"> 48</span>
-<span class="normal"> 49</span>
-<span class="normal"> 50</span>
-<span class="normal"> 51</span>
-<span class="normal"> 52</span>
-<span class="normal"> 53</span>
-<span class="normal"> 54</span>
-<span class="normal"> 55</span>
-<span class="normal"> 56</span>
-<span class="normal"> 57</span>
-<span class="normal"> 58</span>
-<span class="normal"> 59</span>
-<span class="normal"> 60</span>
-<span class="normal"> 61</span>
-<span class="normal"> 62</span>
-<span class="normal"> 63</span>
-<span class="normal"> 64</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 64</span>
 <span class="normal"> 65</span>
 <span class="normal"> 66</span>
 <span class="normal"> 67</span>
@@ -494,50 +484,35 @@ key matches.  If False, <code>abbrev</code> returns the first match.
 <span class="normal"> 99</span>
 <span class="normal">100</span>
 <span class="normal">101</span>
-<span class="normal">102</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@xmod</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@xmod</span>
 <span class="k">def</span> <span class="nf">abbrev</span><span class="p">(</span>
-    <span class="n">abbrevs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">abbrevs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
     <span class="n">key</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">NONE</span><span class="p">,</span>
     <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">NONE</span><span class="p">,</span>
     <span class="n">multi</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">unique</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Expand abbreviations in a dictionary.</span>
-
-<span class="sd">    Handy when the user has a choice of commands with long names.</span>
-
-<span class="sd">    Examples:</span>
-
-<span class="sd">    ```</span>
-<span class="sd">    import abbrev</span>
-<span class="sd">    d = {&#39;one&#39;: 1, &#39;two&#39;: 2, &#39;three&#39;: 3}</span>
-
-<span class="sd">    assert abbrev(d, &#39;one&#39;) == 1</span>
-<span class="sd">    assert abbrev(d, &#39;o&#39;) == 1</span>
-<span class="sd">    assert abbrev(d, &#39;tw&#39;) == 2</span>
-
-<span class="sd">    abbrev(d, &#39;four&#39;)  # Raises a KeyError: no such key</span>
-<span class="sd">    abbrev(d, &#39;t&#39;)  # Raises a KeyError: ambiguous key (&#39;two&#39; or &#39;three&#39;?)</span>
-
-<span class="sd">    # You can &quot;curry&quot; with a specific dictionary to get a callable</span>
-<span class="sd">    # abbreviation example - like this:</span>
-<span class="sd">    my_abbrevs = abbrev(d)</span>
-
-<span class="sd">    assert my_abbrevs(&#39;one&#39;) == 1</span>
-<span class="sd">    assert my_abbrevs(&#39;tw&#39;) == 2</span>
-
-<span class="sd">    # In multi mode, you get all the results that match:</span>
-<span class="sd">    multi = abbrev(d, multi=True)</span>
-
-<span class="sd">    assert multi(&#39;t&#39;) == abbrev(d, &#39;t&#39;, multi=True) == (&#39;two&#39;, &#39;three&#39;)</span>
-<span class="sd">    assert multi(&#39;o&#39;) == abbrev(d, &#39;o&#39;, multi=True) == (&#39;one&#39;, )</span>
-
-<span class="sd">    multi(&#39;four&#39;)  # Still raises a key error</span>
-
-<span class="sd">    # Or if you turn off unique, you get the first result only:</span>
-<span class="sd">    assert abbrev(d, &#39;t&#39;, unique=False) == (&#39;two&#39;,)</span>
-<span class="sd">    ```</span>
+<span class="sd">    Expand an abbreviation or return an abbreviator</span>
 
 <span class="sd">    Args:</span>
 
