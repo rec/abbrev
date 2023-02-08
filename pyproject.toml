@@ -10,7 +10,7 @@ target = 'README.rst'
 [tool.poetry]
 name = "abbrev"
 version = "1.0.2"
-description = "🐜 A dictionary that allows abbreviations 🐜"
+description = "🐜 Expand abbreviations 🐜"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 license = "MIT"
 readme = "README.rst"

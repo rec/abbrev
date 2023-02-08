@@ -1,4 +1,6 @@
 """
+ 🐜 Expand abbreviations 🐜
+
 Very handy when the user has a choice of commands with long names.
 
 ## Examples
