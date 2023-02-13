@@ -66,7 +66,6 @@ from typing import Any, Mapping, Optional, Sequence, Union
 import functools
 import xmod
 
-__version__ = '1.0.1'
 __all__ = 'abbrev', 'NONE'
 
 NONE = object()
