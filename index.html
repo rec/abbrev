@@ -240,8 +240,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#more-info" class="md-nav__link">
-    More info
+  <a href="#about-this-project" class="md-nav__link">
+    About this project
   </a>
   
 </li>
@@ -336,8 +336,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#more-info" class="md-nav__link">
-    More info
+  <a href="#about-this-project" class="md-nav__link">
+    About this project
   </a>
   
 </li>
@@ -356,9 +356,6 @@
                 
                   
 
-
-
-<h1 id="abbrev-tiny-full-featured-abbreviation-expander">&#128028;: <code>abbrev</code>: Tiny full-featured abbreviation expander &#128028;</h1>
 
 
 <div class="doc doc-object doc-module">
@@ -424,7 +421,10 @@ assert abbrev(d, 't', unique=False) == (200, 300)
 
   
 
-  <div class="doc doc-children">
+  <hr>
+<p></p>
+<h1>API Documentation</h1>
+<div class="doc doc-children">
 
 
 
@@ -446,7 +446,24 @@ assert abbrev(d, 't', unique=False) == (200, 300)
 
   <div class="doc doc-contents ">
   
-      <p>Expand an abbreviation, or return an abbreviator if <code>key</code> is not set.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="typing.Any">Any</span></code>
+          </td>
+          <td><p>An exapanded abbreviation if <code>key</code> is given, else an abbreviator</p></td>
+        </tr>
+    </tbody>
+  </table>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -598,7 +615,8 @@ key matches.</p>
 <span class="normal">138</span>
 <span class="normal">139</span>
 <span class="normal">140</span>
-<span class="normal">141</span></pre></div></td>
+<span class="normal">141</span>
+<span class="normal">142</span></pre></div></td>
 <td class="code"><div><pre><span></span><code><span class="nd">@xmod</span>
 <span class="k">def</span> <span class="nf">abbrev</span><span class="p">(</span>
     <span class="n">abbrevs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="p">],</span>
@@ -608,7 +626,8 @@ key matches.</p>
     <span class="n">unique</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Expand an abbreviation, or return an abbreviator if `key` is not set.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">       An exapanded abbreviation if `key` is given, else an abbreviator</span>
 
 <span class="sd">    Args:</span>
 
@@ -681,10 +700,10 @@ key matches.</p>
   </div>
 
 </div>
-<h2 id="more-info">More info</h2>
+<h2 id="about-this-project">About this project</h2>
 <ul>
-<li><a href="https://github.com/rec/abbrev"> Code </a></li>
-<li><a href="https://github.com/rec"> Me </a></li>
+<li><a href="https://github.com/rec/abbrev"> Source code </a></li>
+<li><a href="https://github.com/rec"> More by this author </a></li>
 <li><a href="https://github.com/sponsors/rec"> Sponsors </a></li>
 </ul>
 
