@@ -1,60 +1,68 @@
 """
- 🐜 Expand abbreviations 🐜
+🐜 `abbrev`: Tiny full-featured abbreviation expander 🐜
 
-Very handy when the user has a choice of commands with long names.
+Expand a `Sequence` or `Mapping` of string abbreviations.
 
-## Examples
+Handy when the user has a choice of commands with long names.
+
+## Example 1: Use a list of choices
 
     import abbrev
-
-    #
-    # 1. Using a list of choices
 
     a = ['one', 'two', 'three']
 
     assert abbrev(a, 'one') == 'one'
     assert abbrev(a, 'o') == 'one'
-    assert abbrev(a, 'tw') == 'one'
+    assert abbrev(a, 'tw') == 'two'
 
     abbrev(a, 'four')  # Raises a KeyError: no such key
     abbrev(a, 't')  # Raises a KeyError: ambiguous key ('two' or 'three'?)
 
-    #
-    # 2. Using a dictionary of choices
 
-    d = {'one': 1, 'two': 2, 'three': 3}
-    assert abbrev(d, 'one') == 1
-    assert abbrev(d, 'o') == 1
-    assert abbrev(d, 'tw') == 2
+## Example 2: Use a dictionary of choices
 
-    #
-    # 3. How to make an abbreviator.
+    import abbrev
 
-    my_abbrevs = abbrev(d)
+    d = {'one': 100, 'two': 200, 'three': 300}
 
-    assert my_abbrevs('one') == 1
-    assert my_abbrevs('tw') == 2
+    assert abbrev(d, 'one') == 100
+    assert abbrev(d, 'o') == 100
+    assert abbrev(d, 'tw') == 200
 
-    #
-    # 4. Multi mode returns all the results that match
+## Example 3: Make an abbreviator to re-use
 
-    multi = abbrev(d, multi=True)
+    import abbrev
 
-    assert multi('t') == abbrev(d, 't', multi=True) == ('two', 'three')
+    d = {'one': 100, 'two': 200, 'three': 300}
+
+    abbreviator = abbrev(d)
+
+    assert abbreviator('one') == my_abbrevs('o') == 100
+    assert abbreviator('tw') == 200
+
+## Example 4: Get all matches, when `multi=True`
+
+    import abbrev
+
+    a = ['one', 'two, 'three'}
+
+    multi = abbrev(a, multi=True)  # Make an abbreviator
+
+    assert multi('t') == abbrev(d, 't', multi=True) == ('two', three')
     assert multi('o') == abbrev(d, 'o', multi=True) == ('one', )
 
     multi('four')  # Still raises a key error
 
-    #
-    # 5. Turn off unique to get the first result only.
+## Example 5: Get only the first result, when `unique=False`
 
-    assert abbrev(d, 't', unique=False) == ('two',)
+    import abbrev
 
-Sponsorship information here
+    d = {'one': 100, 'two': 200, 'three': 300}
 
+    assert abbrev(d, 't', unique=False) == (200, 300)
 """
 
-from typing import Any, Dict, Sequence, Union
+from typing import Any, Mapping, Optional, Sequence, Union
 import functools
 import xmod
 
@@ -66,34 +74,41 @@ NONE = object()
 
 @xmod
 def abbrev(
-    abbrevs: Union[Dict[str, Any], Sequence[str]],
-    key: Any = NONE,
+    abbrevs: Union[ Mapping[str, Any], Sequence[str] ],
+    key: Optional[str] = None,
     default: Any = NONE,
     multi: bool = False,
     unique: bool = True,
 ) -> Any:
     """
-    Expand an abbreviation or return an abbreviator
+    Expand an abbreviation, or return an abbreviator if `key` is not set.
 
     Args:
 
       abbrevs:  A dictionary with string keys or a sequence of strings
 
       key: An abbreviated key to look up in `abbrevs`,
+
         If `key` is omitted, `abbrev` returns a callable that looks up
         abbreviations in `abbrevs`
 
       default: if `key` is not found in the dictionary, `default` is returned,
-        if it's set.  Otherwise, missing keys throw a KeyError
+        if it is set.
 
-      multi: If True, a tuple of matching keys is returned on a match
+        If `default` is not set, missing keys throw a `KeyError`
+
+      multi: If True, a tuple of matching keys is returned on a match.
+
         If False, the default, only a single matching value is returned
 
       unique: If True, the default, `abbrev` raises a KeyError if more than one
-        key matches.  If False, `abbrev` returns the first match.
+        key matches.
+
+        If False, `abbrev` returns the first match.
+
         `unique` is ignored if `multi` is set
     """
-    if key is NONE:
+    if key is None:
         return functools.partial(
             abbrev, abbrevs, default=default, multi=multi, unique=unique
         )
@@ -108,10 +123,13 @@ def abbrev(
     kv = [(k, v) for k, v in abbrevs.items() if k.startswith(key)]
     if kv:
         keys, values = zip(*kv)
+
     elif multi:
         return []
+
     elif default is not NONE:
         return default
+
     else:
         raise KeyError(key)
 
