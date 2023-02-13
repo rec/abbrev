@@ -80,10 +80,10 @@ def abbrev(
     unique: bool = True,
 ) -> Any:
     """
-    Expand an abbreviation, or return an abbreviator if `key` is not set.
+    Returns:
+       An exapanded abbreviation if `key` is given, else an abbreviator
 
     Args:
-
       abbrevs:  A dictionary with string keys or a sequence of strings
 
       key: An abbreviated key to look up in `abbrevs`,
