@@ -1,4 +1,4 @@
-# 🐜: `abbrev`: `abbrev`: Tiny full-featured abbreviation expander 🐜
+# 🐜: `abbrev`: Tiny full-featured abbreviation expander 🐜
 
 ::: abbrev
 
