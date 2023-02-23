@@ -1,5 +1,3 @@
-# 🐜 `abbrev`: Tiny full-featured abbreviation expander 🐜"
-
 Expand a `Sequence` or `Mapping` of string abbreviations.
 
 Handy when the user has a choice of commands with long names.
