@@ -1,11 +1,11 @@
-site_name: '🐜: `abbrev`: Tiny full-featured abbreviation expander 🐜'
+site_name: '🐜: `abbrev`: Expand abbreviations 🐜'
 
 theme:
   name: material
 
   palette:
     primary:
-      'lime'
+      'lightGreen'
 
   font:
     text:
