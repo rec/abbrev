@@ -1,5 +1,5 @@
 """
-# 🐜 `abbrev`: Tiny full-featured abbreviation expander 🐜
+# 🐜 `abbrev`: Expand abbreviations 🐜
 
 Expand a `Sequence` or `Mapping` of string abbreviations.
 
