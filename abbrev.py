@@ -81,7 +81,7 @@ def abbrev(
 ) -> Any:
     """
     Returns:
-       An exapanded abbreviation if `key` is given, else an abbreviator
+       An expanded abbreviation if `key` is given, else an abbreviator
 
     Args:
       abbrevs:  A dictionary with string keys or a sequence of strings
