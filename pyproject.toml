@@ -14,6 +14,9 @@ description = "🐜 Expand abbreviations 🐜"
 authors = ["Tom Ritchford <tom@swirly.com>"]
 license = "MIT"
 readme = "README.md"
+repository = "https://github.com/rec/abbrev"
+homepage = "https://github.com/rec/abbrev"
+documentation = "https://rec.github.io/abbrev"
 
 [tool.poetry.dependencies]
 python = ">=3.8"
