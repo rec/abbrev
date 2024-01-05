@@ -28,6 +28,8 @@ flake8 = "*"
 pytest = "*"
 readme-renderer = "*"
 mkdocs = "*"
+mypy = "*"
+ruff = "*"
 mkdocstrings = {extras = ["python"], version = "*"}
 mkdocs-material = "*"
 
