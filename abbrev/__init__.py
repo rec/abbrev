@@ -71,7 +71,7 @@ __all__ = 'abbrev', 'NONE'
 NONE = object()
 
 
-@xmod
+@xmod.xmod
 def abbrev(
     abbrevs: Union[ Mapping[str, Any], Sequence[str] ],
     key: Optional[str] = None,
