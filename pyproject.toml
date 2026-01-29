@@ -1,35 +1,53 @@
+[project]
+name = "abbrev"
+version = "1.2.1"
+description = "🐜 Expand abbreviations 🐜"
+authors = [{ name = "Tom Ritchford", email = "tom@swirly.com" }]
+requires-python = ">=3.8"
+readme = "README.md"
+license = "MIT"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = ["xmod"]
+
+[project.urls]
+Homepage = "https://github.com/rec/abbrev"
+Repository = "https://github.com/rec/abbrev"
+Documentation = "https://rec.github.io/abbrev"
+
 [tool.doks]
 source = 'abbrev.py'
 target = 'README.rst'
 
-[tool.poetry]
-name = "abbrev"
-version = "1.2.1"
-description = "🐜 Expand abbreviations 🐜"
-authors = ["Tom Ritchford <tom@swirly.com>"]
-license = "MIT"
-readme = "README.md"
-repository = "https://github.com/rec/abbrev"
-homepage = "https://github.com/rec/abbrev"
-documentation = "https://rec.github.io/abbrev"
+[dependency-groups]
+dev = [
+    "coverage",
+    "flake8",
+    "pytest",
+    "readme-renderer",
+    "mkdocs",
+    "mypy",
+    "ruff",
+    "mkdocstrings[python]",
+    "mkdocs-material",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.8"
-xmod = "*"
+[tool.uv]
 
-[tool.poetry.group.dev.dependencies]
-coverage = "*"
-flake8 = "*"
-pytest = "*"
-readme-renderer = "*"
-mkdocs = "*"
-mypy = "*"
-ruff = "*"
-mkdocstrings = {extras = ["python"], version = "*"}
-mkdocs-material = "*"
+[tool.uv.build-backend]
+module-root = ""
 
-
-[tool.coverage]
+[build-system]
+requires = ["uv_build>=0.9.0,<0.10.0"]
+build-backend = "uv_build"
 [tool.coverage.run]
 branch = true
 source = ["abbrev"]
@@ -52,6 +70,3 @@ quote-style = "single"
 
 [tool.mypy]
 strict = true
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
