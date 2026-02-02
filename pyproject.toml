@@ -30,14 +30,14 @@ target = 'README.rst'
 [dependency-groups]
 dev = [
     "coverage",
-    "flake8",
     "pytest",
     "readme-renderer",
     "mkdocs",
-    "mypy",
     "ruff",
     "mkdocstrings[python]",
     "mkdocs-material",
+    "pyupgrade>=3.21.2",
+    "ty>=0.0.14",
 ]
 
 [tool.uv]
@@ -48,6 +48,7 @@ module-root = ""
 [build-system]
 requires = ["uv_build>=0.9.0,<0.10.0"]
 build-backend = "uv_build"
+
 [tool.coverage.run]
 branch = true
 source = ["abbrev"]
@@ -55,12 +56,7 @@ source = ["abbrev"]
 [tool.coverage.report]
 fail_under = 90
 skip_covered = true
-exclude_lines = [
-    "pragma: no cover",
-    "if False:",
-    "if __name__ == .__main__.:",
-    "raise NotImplementedError"
-]
+exclude_lines = ["pragma: no cover", "if False:", "if __name__ == .__main__.:", "raise NotImplementedError"]
 
 [tool.ruff]
 line-length = 88
