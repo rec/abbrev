@@ -62,8 +62,10 @@ Handy when the user has a choice of commands with long names.
     assert abbrev(d, 't', unique=False) == (200, 300)
 """
 
-from typing import Any, Mapping, Optional, Sequence, Union
 import functools
+from collections.abc import Mapping, Sequence
+from typing import Any
+
 import xmod
 
 __all__ = 'abbrev', 'NONE'
@@ -73,8 +75,8 @@ NONE = object()
 
 @xmod.xmod
 def abbrev(
-    abbrevs: Union[ Mapping[str, Any], Sequence[str] ],
-    key: Optional[str] = None,
+    abbrevs: Mapping[str, Any] | Sequence[str],
+    key: str | None = None,
     default: Any = NONE,
     multi: bool = False,
     unique: bool = True,
@@ -112,16 +114,14 @@ def abbrev(
             abbrev, abbrevs, default=default, multi=multi, unique=unique
         )
 
-    if not isinstance(abbrevs, dict):
-        abbrevs = {i: i for i in abbrevs}
-
+    abbrevs = abbrevs if isinstance(abbrevs, dict) else {i: i for i in abbrevs}
     r = abbrevs.get(key, NONE)
     if r is not NONE:
         return (r,) if multi else r
 
     kv = [(k, v) for k, v in abbrevs.items() if k.startswith(key)]
     if kv:
-        keys, values = zip(*kv)
+        keys, values = zip(*kv, strict=False)
 
     elif multi:
         return []
